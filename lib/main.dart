@@ -1,3 +1,4 @@
+import 'package:endless_runner/main_menu/main_menu_screen.dart';
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'app_lifecycle/app_lifecycle.dart';
 import 'audio/audio_controller.dart';
 import 'player_progress/player_progress.dart';
-import 'router.dart';
+
 import 'settings/settings.dart';
 import 'style/palette.dart';
 
@@ -45,9 +46,10 @@ class MyGame extends StatelessWidget {
         child: Builder(builder: (context) {
           final palette = context.watch<Palette>();
 
-          return MaterialApp.router(
+          return MaterialApp(
+            home: MainMenuScreen(),
             debugShowCheckedModeBanner: false,
-            title: 'Endless ',
+            title: 'Endless Runner',
             theme: flutterNesTheme().copyWith(
               colorScheme: ColorScheme.fromSeed(
                 seedColor: palette.seed.color,
@@ -58,7 +60,6 @@ class MyGame extends StatelessWidget {
                 displayColor: palette.text.color,
               ),
             ),
-            routerConfig: router,
           );
         }),
       ),

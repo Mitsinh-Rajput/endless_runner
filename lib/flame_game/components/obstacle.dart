@@ -13,7 +13,7 @@ class Obstacle extends SpriteComponent with HasWorldReference<EndlessWorld> {
       : _srcSize = Vector2.all(16),
         _srcPosition = Vector2.all(32),
         super(
-          size: Vector2.all(150),
+          size: Vector2.all(100),
           anchor: Anchor.bottomLeft,
         );
 
@@ -21,7 +21,7 @@ class Obstacle extends SpriteComponent with HasWorldReference<EndlessWorld> {
       : _srcSize = Vector2(32, 48),
         _srcPosition = Vector2.zero(),
         super(
-          size: Vector2(200, 250),
+          size: Vector2(150, 200),
           anchor: Anchor.bottomLeft,
         );
 
@@ -29,7 +29,7 @@ class Obstacle extends SpriteComponent with HasWorldReference<EndlessWorld> {
       : _srcSize = Vector2(32, 16),
         _srcPosition = Vector2(48, 32),
         super(
-          size: Vector2(200, 100),
+          size: Vector2(150, 50),
           anchor: Anchor.bottomLeft,
         );
 

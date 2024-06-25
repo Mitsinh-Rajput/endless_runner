@@ -1,3 +1,4 @@
+import 'package:endless_runner/flame_game/game_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nes_ui/nes_ui.dart';
@@ -12,7 +13,7 @@ import '../style/palette.dart';
 /// it lets the user go to the next level, or otherwise back to the level
 /// selection screen.
 class GameWinDialog extends StatelessWidget {
-  const GameWinDialog({
+   GameWinDialog({
     super.key,
     required this.level,
     required this.levelCompletedIn,
@@ -24,45 +25,33 @@ class GameWinDialog extends StatelessWidget {
   /// How many seconds that the level was completed in.
   final int levelCompletedIn;
 
+  final scoreNotifier = ValueNotifier(0);
+
   @override
   Widget build(BuildContext context) {
     final palette = context.read<Palette>();
     return Center(
-      child: NesContainer(
-        width: 420,
+      child: Container(
+        width: 300,
         height: 300,
-        backgroundColor: palette.backgroundPlaySession.color,
+        color: palette.backgroundPlaySession.color,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Well done!',
+              'Game Over!',
               style: Theme.of(context).textTheme.headlineMedium,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
             Text(
-              'You completed level ${level.number} in $levelCompletedIn seconds.',
+              'Your happiness score is 0 in $levelCompletedIn seconds.',
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 16),
-            if (level.number < gameLevels.length) ...[
-              NesButton(
-                onPressed: () {
-                  context.go('/play/session/${level.number + 1}');
-                },
-                type: NesButtonType.primary,
-                child: const Text('Next level'),
-              ),
-              const SizedBox(height: 16),
-            ],
-            NesButton(
-              onPressed: () {
-                context.go('/play');
-              },
-              type: NesButtonType.normal,
-              child: const Text('Level selection'),
-            ),
+            ElevatedButton(onPressed: (){
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) =>  GameScreen(level: gameLevels.first)),);
+            }, child: Text("Restart"))
           ],
         ),
       ),

@@ -9,6 +9,7 @@ import '../endless_runner.dart';
 import '../endless_world.dart';
 import 'obstacle.dart';
 import 'point.dart';
+import '../game_screen.dart'; // Add this import
 
 /// The [Player] is the component that the physical player of the game is
 /// controlling.
@@ -21,7 +22,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
     required this.addScore,
     required this.resetScore,
     super.position,
-  }) : super(size: Vector2.all(150), anchor: Anchor.center, priority: 1);
+  }) : super(size: Vector2.all(100), anchor: Anchor.center, priority: 1);
 
   final void Function({int amount}) addScore;
   final VoidCallback resetScore;
@@ -31,7 +32,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
   double _gravityVelocity = 0;
 
   // The maximum length that the player can jump. Defined in virtual pixels.
-  final double _jumpLength = 600;
+  final double _jumpLength = 400;
 
   // Whether the player is currently in the air, this can be used to restrict
   // movement for example.
@@ -104,15 +105,18 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
 
   @override
   void onCollisionStart(
-    Set<Vector2> intersectionPoints,
-    PositionComponent other,
-  ) {
+      Set<Vector2> intersectionPoints,
+      PositionComponent other,
+      ) {
     super.onCollisionStart(intersectionPoints, other);
     // When the player collides with an obstacle it should lose all its points.
     if (other is Obstacle) {
       game.audioController.playSfx(SfxType.damage);
       resetScore();
       add(HurtEffect());
+      // Display win dialog
+      game.pauseEngine();
+      game.overlays.add(GameScreen.winDialogKey);
     } else if (other is Point) {
       // When the player collides with a point it should gain a point and remove
       // the `Point` from the game.

@@ -23,14 +23,16 @@ import 'endless_world.dart';
 /// could also be set inside of `onLoad` for example.
 class EndlessRunner extends FlameGame<EndlessWorld> with HasCollisionDetection {
 
-  EndlessRunner({
+  final BuildContext context;
+  EndlessRunner( {
+    required this.context,
     required this.level,
     required PlayerProgress playerProgress,
+    
     required this.audioController,
   }) : super(
-          world: EndlessWorld(level: level, playerProgress: playerProgress),
-          camera: CameraComponent.withFixedResolution(width: 550, height: 1200),
-        );
+    world: EndlessWorld(level: level, playerProgress: playerProgress),
+  );
 
   /// What the properties of the level that is played has.
   final GameLevel level;
@@ -42,6 +44,11 @@ class EndlessRunner extends FlameGame<EndlessWorld> with HasCollisionDetection {
   /// that only needs to be set once when the level starts up.
   @override
   Future<void> onLoad() async {
+    camera = CameraComponent.withFixedResolution(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+    );
+
     // The backdrop is a static layer behind the world that the camera is
     // looking at, so here we add our parallax background.
     camera.backdrop.add(Background(speed: world.speed));
@@ -50,13 +57,12 @@ class EndlessRunner extends FlameGame<EndlessWorld> with HasCollisionDetection {
     // to render will have, like font family, size and color in this instance.
     final textRenderer = TextPaint(
       style: const TextStyle(
-        fontSize: 30,
+        fontSize: 20,
         color: Colors.white,
-        fontFamily: 'Press Start 2P',
       ),
     );
 
-    final scoreText = 'Embers: 0 / ${level.winScore}';
+    final scoreText = 'Happiness: 0';
 
     // The component that is responsible for rendering the text that contains
     // the current score.

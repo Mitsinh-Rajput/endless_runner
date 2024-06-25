@@ -1,3 +1,5 @@
+import 'package:endless_runner/flame_game/game_screen.dart';
+import 'package:endless_runner/level_selection/levels.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -38,8 +40,10 @@ class MainMenuScreen extends StatelessWidget {
           children: [
             WobblyButton(
               onPressed: () {
-                audioController.playSfx(SfxType.buttonTap);
-                GoRouter.of(context).go('/play');
+                // audioController.playSfx(SfxType.buttonTap);
+                // GoRouter.of(context)
+                //     .go('/play/session/${1}');
+                Navigator.push(context, MaterialPageRoute(builder: (context) =>  GameScreen(level: gameLevels.first)),);
               },
               child: const Text('Play'),
             ),

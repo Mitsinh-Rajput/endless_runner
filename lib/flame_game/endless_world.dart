@@ -110,7 +110,7 @@ class EndlessWorld extends World with TapCallbacks, HasGameReference {
     // in, update the player's progress and open up a dialog that shows that
     // the player passed the level.
     scoreNotifier.addListener(() {
-      if (scoreNotifier.value >= level.winScore) {
+      if (scoreNotifier.value == 0) {
         final levelTime = (DateTime.now().millisecondsSinceEpoch -
                 timeStarted.millisecondsSinceEpoch) /
             1000;
